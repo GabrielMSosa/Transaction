@@ -2,8 +2,12 @@ package com.example.transaction.service;
 
 import java.util.UUID;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mapping.AccessOptions.SetOptions.Propagation;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 
 import com.example.transaction.dto.FlighBookingAcknolowedgment;
 import com.example.transaction.dto.FlightBookingRequest;
@@ -12,6 +16,7 @@ import com.example.transaction.model.PaymentInfo;
 import com.example.transaction.repository.IPasanggerInfoRepository;
 import com.example.transaction.repository.IPaymentInfoRepository;
 import com.example.transaction.utils.PaymentUtils;
+
 
 @Service
 public class FlightBookingService implements IFlightBookingService {
@@ -22,8 +27,9 @@ public class FlightBookingService implements IFlightBookingService {
     private IPaymentInfoRepository repoPaymentInfo;
 
 
-
+//@Transactional(readOnly=false,isolation=Isolation.READ_COMMITTED,propagation=org.springframework.transaction.annotation.Propagation.REQUIRED)
     @Override
+    @Transactional
     public FlighBookingAcknolowedgment bookFlightTicket(FlightBookingRequest request) {
         
 
