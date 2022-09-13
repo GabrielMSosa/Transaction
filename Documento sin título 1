@@ -1,0 +1,63 @@
+con Transaction no se carga con inconsistencia en la BD 
+
+
+Hibernate: select next_val as id_val from hibernate_sequence for update
+Hibernate: update hibernate_sequence set next_val= ? where next_val=?
+2022-07-10 15:57:36.839 ERROR 77520 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is com.example.transaction.exception.InsuficcienAmountExcepcion: insufficient fund...!] with root cause
+
+
+
+para abrir mysql ejecutamos xamp despues corremos el codigo
+
+
+para ejecutar xamp
+sudo /opt/lampp/manager-linux-x64.run
+
+sudo /opt/lampp/bin/mysql -u root
+
+
+query  para configurar la isolation 
+
+La serializable no te deja correr dos transacciones a la vez  hay que terminar con una transaccion para accceder a la otro si no tira time out
+
+sytaxis  SQL para la isolation 
+//Show existing transaction isolation level if mysql version >= 8
+SELECT @@TRANSACTION_ISOLATION;
+
+//Show existing transaction isolation level if mysql version < 8
+SELECT @@TX_ISOLATION;
+
+//Set transaction isolation level to serializable. Using same syntax 
+//we can set it to other isolation level.
+SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+//By default auto commit is enabled for mysql transaction. So we will disable it.
+SET AUTOCOMMIT=0;
+
+//Start transaction
+BEGIN
+
+//Commit transaction
+COMMIT
+
+ SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+ 
+ 
+ # REPEATABLE-READ
+ 
+ Sin embargo, el nivel de aislamiento de LECTURA REPETIBLE se comporta de manera diferente cuando se usa mysql. Cuando usamos MYSQL, no podemos ver los registros recién agregados que están confirmados por la segunda transacción.
+(VERIFICAMOS CON LA PRACTICA)
+
+READ COMMITED
+
+
+SI SE ABREN DOS TRANSACCIONES SE ABRE PRIMERO T1 SE INICIA PERO NO SE HACE EL COMMIT AUN Y LUEGO EMPEZAMOS CON OTRA TRANSACCION EN T2 Y HACEMOS MODIFICACIONES EN T2 ESTOS SERAN REFLEJADOS EN T1 SIEMPRE QUE NO HAGAMOS EL COMMIT EN LA PRIMERA
+
+READ UNCOMMITED
+
+Si dos transacciones se ejecutan al mismo tiempo, antes de que se confirme la primera transacción, los registros existentes se pueden cambiar, así como los nuevos registros se pueden cambiar por la segunda transacción. Incluso si la segunda transacción no está confirmada, los registros recién agregados y también actualizados se reflejan en la primera transacción que aún no está confirmada.
+
+falta trabajar aca.
+
+
+

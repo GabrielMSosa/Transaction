@@ -11,9 +11,9 @@ public class PaymentUtils {
     private static Map<String, Double> paymentMap = new HashMap<>();
     static{
         paymentMap.put("acc1", 12000.00);
-        paymentMap.put("acc1", 10000.00);
-        paymentMap.put("acc1", 5000.00);
-        paymentMap.put("acc1", 8000.00);
+        paymentMap.put("acc2", 10000.00);
+        paymentMap.put("acc3", 5000.00);
+        paymentMap.put("acc4", 8000.00);
     }
 
     public static boolean validateCreditLimit(String accNo,double paidAmount)
